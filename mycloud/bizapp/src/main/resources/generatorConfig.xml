@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+    <context id="DB2Tables" targetRuntime="MyBatis3">
+        <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
+                        connectionURL="jdbc:mysql://localhost:3306/test"
+                        userId="root"
+                        password=""/>
+        <javaModelGenerator targetPackage="ryan.cloud.bizapp.entity" targetProject="src/main/java"/>
+        <sqlMapGenerator targetPackage="mappers" targetProject="src/main/resources"/>
+        <javaClientGenerator type="XMLMAPPER" targetPackage="ryan.cloud.bizapp.mapper" targetProject="src/main/java"/>
+        <table tableName="users" domainObjectName="User"/>
+    </context>
+</generatorConfiguration>
