@@ -5,8 +5,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import ryan.cloud.myapp.OrderNoUtil;
+import ryan.cloud.myapp.common.enums.OrderStatusEnum;
 import ryan.cloud.myapp.dao.mapper.OrdersMapper;
-import ryan.cloud.myapp.dao.module.Goods;
 import ryan.cloud.myapp.dao.module.Orders;
 
 import java.util.Date;
@@ -36,6 +36,7 @@ public class OrderServiceImpl implements OrderService {
             order.setCreatetime(new Date());
             order.setGoodid(goodId);
             order.setOrderno(OrderNoUtil.generateOrderNumber());
+            order.setOrderstatus(OrderStatusEnum.INIT.getStatus());
             if (!createOrder(order)) {
                 throw new RuntimeException("createOrder fail");
             }
