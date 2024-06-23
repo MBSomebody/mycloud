@@ -6,6 +6,6 @@ public interface OrderService {
 
     boolean createOrder(Orders order);
 
-    Orders handleBiz(int goodId);
+    Orders handleBiz(Orders order);
 
 }

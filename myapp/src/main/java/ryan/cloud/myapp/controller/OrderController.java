@@ -9,8 +9,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ryan.cloud.myapp.OrderNoUtil;
+import ryan.cloud.myapp.common.enums.OrderStatusEnum;
 import ryan.cloud.myapp.dao.module.Goods;
 import ryan.cloud.myapp.dao.module.Orders;
+import ryan.cloud.myapp.integretion.msg.KafkaProducerService;
 import ryan.cloud.myapp.service.GoodsService;
 import ryan.cloud.myapp.service.OrderService;
 
@@ -27,6 +29,9 @@ public class OrderController implements InitializingBean {
 
     @Autowired
     private GoodsService goodsService;
+
+    @Autowired
+    KafkaProducerService producerService;
 
 
     private static final String GOODS_KEY = "goodsRemain";
@@ -46,20 +51,24 @@ public class OrderController implements InitializingBean {
                 Long increment = redisTemplate.opsForValue().increment(GOODS_KEY, -1);
 
                 if (increment != null && increment >= 0) {
-                    System.out.println(increment + " redis 库存");
-                    Orders order = orderService.handleBiz(goodsId);
+                    Orders order = new Orders();
+                    order.setCreatetime(new Date());
+                    order.setGoodid(goodsId);
+                    order.setOrderno(OrderNoUtil.generateOrderNumber());
+                    order.setOrderstatus(OrderStatusEnum.SENT.getStatus());
+                    producerService.sendOrder(order);
+                    orderService.createOrder(order);
                     resp.setOrder(order);
-                    System.out.println("handleBiz end");
+                    System.out.println("createOrder end" + resp.getOrder().toString());
                 }
             } else {
                 resp.setMessage("sell out.");
             }
+
         } catch (Exception e) {
             resp.setSuccess(false);
             redisTemplate.opsForValue().increment(GOODS_KEY, 1);
             System.out.println(e);
-        } finally {
-            System.out.println("createOrder end");
         }
 
         return resp;

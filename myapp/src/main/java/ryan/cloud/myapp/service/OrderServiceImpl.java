@@ -6,7 +6,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import ryan.cloud.myapp.OrderNoUtil;
 import ryan.cloud.myapp.common.enums.OrderStatusEnum;
-import ryan.cloud.myapp.dao.mapper.OrdersMapper;
+import ryan.cloud.myapp.dao.mapper.OrdersCusMapper;
 import ryan.cloud.myapp.dao.module.Orders;
 
 import java.util.Date;
@@ -15,7 +15,7 @@ import java.util.Date;
 public class OrderServiceImpl implements OrderService {
 
     @Autowired
-    private OrdersMapper orderMapper;
+    private OrdersCusMapper orderMapper;
 
     @Autowired
     private GoodsService goodsService;
@@ -27,26 +27,22 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-    public Orders handleBiz(int goodId) {
+    public Orders handleBiz(Orders order) {
         Orders res = null;
-        boolean b = goodsService.deduct(goodId, -1);
-
+        boolean b = goodsService.deduct(order.getGoodid(), -1);
         if (b) {
-            Orders order = new Orders();
-            order.setCreatetime(new Date());
-            order.setGoodid(goodId);
-            order.setOrderno(OrderNoUtil.generateOrderNumber());
-            order.setOrderstatus(OrderStatusEnum.INIT.getStatus());
-            if (!createOrder(order)) {
-                throw new RuntimeException("createOrder fail");
-            }
+            order.setOrderstatus(OrderStatusEnum.SUCCESS.getStatus());
+//            if (!createOrder(order)) {
+//                throw new RuntimeException("createOrder fail");
+//            }
+            orderMapper.updateByOrderNo(order);
             res = order;
         } else {
             throw new RuntimeException("deductRemain fail");
         }
-        if (res.getOrderno().endsWith("1") || res.getOrderno().endsWith("2")) {
-            throw new RuntimeException("Simulated Exception");
-        }
+//        if (res.getOrderno().endsWith("1") || res.getOrderno().endsWith("2")) {
+//            throw new RuntimeException("Simulated Exception");
+//        }
         return res;
     }
 }
