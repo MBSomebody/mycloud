@@ -14,12 +14,6 @@ public class KafkaConsumerListener {
     @Autowired
     OrderService orderService;
 
-//    @KafkaListener(topics = "myapp_order", groupId = "myGroup")
-//    public void consume(Orders message) {
-//        System.out.println("Consumed message: " + message.toString());
-//        // 处理消息的逻辑...
-//    }
-
 
     @KafkaListener(topics = "myapp_order", groupId = "myGroup")
     public void listen(ConsumerRecord<String, Orders> record,
