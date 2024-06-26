@@ -14,9 +14,6 @@ public class AuthService {
     @Autowired
     private MyusersCusMapper userRepository;
 
-//    @Autowired
-//    private PasswordEncoder passwordEncoder;
-
     public Myusers findByUsername(String username) {
         return userRepository.queryByUsername(username);
      }
@@ -25,7 +22,6 @@ public class AuthService {
         Myusers user = new Myusers();
         user.setUsername(username);
         PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
-
         user.setPassword(encoder.encode(password));
         user.setRole(role);
         userRepository.insert(user);

@@ -11,6 +11,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import ryan.cloud.myaccount.service.CustomUserDetailsService;
 //import ryan.cloud.myaccount.service.CustomUserDetailsService;
 
 @Configuration
@@ -38,14 +39,7 @@ public class WebSecurityConfig {
 
     @Bean
     public UserDetailsService userDetailsService() {
-//        return new CustomUserDetailsService();
-        UserDetails user = User.withDefaultPasswordEncoder()
-                .username("user")
-                .password("pp")
-                .roles("USER")
-                .build();
-
-        return new InMemoryUserDetailsManager(user);
+        return new CustomUserDetailsService();
     }
 
 //    @Bean
