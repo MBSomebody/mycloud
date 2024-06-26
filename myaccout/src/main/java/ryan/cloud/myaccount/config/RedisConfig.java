@@ -1,4 +1,4 @@
-package ryan.cloud.myaccout.config;
+package ryan.cloud.myaccount.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

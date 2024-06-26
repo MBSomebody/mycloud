@@ -1,4 +1,4 @@
-package ryan.cloud.myaccout.common.enums;
+package ryan.cloud.myaccount.common.enums;
 
 public enum UserRole {
     ROLE_USER("USER"),

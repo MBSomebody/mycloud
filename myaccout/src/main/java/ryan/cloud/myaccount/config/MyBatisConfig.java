@@ -1,4 +1,4 @@
-package ryan.cloud.myaccout.config;
+package ryan.cloud.myaccount.config;
 
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Configuration;

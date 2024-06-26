@@ -1,9 +1,8 @@
-package ryan.cloud.myaccout.dao.mapper;
+package ryan.cloud.myaccount.dao.mapper;
 
 import org.apache.ibatis.annotations.Param;
-import ryan.cloud.myaccout.dao.model.Myusers;
+import ryan.cloud.myaccount.dao.model.Myusers;
 
 public interface MyusersCusMapper extends MyusersMapper {
-
     Myusers queryByUsername(@Param("username") String usernanme);
 }

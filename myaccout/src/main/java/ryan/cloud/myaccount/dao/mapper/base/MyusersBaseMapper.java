@@ -1,8 +1,8 @@
-package ryan.cloud.myaccout.dao.mapper.base;
+package ryan.cloud.myaccount.dao.mapper.base;
 
 import java.util.List;
-import org.apache.ibatis.annotations.Param;
-import ryan.cloud.myaccout.dao.model.Myusers;
+
+import ryan.cloud.myaccount.dao.model.Myusers;
 
 /**
 *  @author author
